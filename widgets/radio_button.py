@@ -1,9 +1,11 @@
-# PySide2のモジュールを読み込む
-from PySide2 import QtWidgets
+"""QRadioButton のサンプル"""
+
+from PySide6 import QtWidgets
 
 
-# ウィンドウの見た目と各機能（今はウィンドウだけ）
 class MainWindow(QtWidgets.QWidget):
+    """メインウィンドウ."""
+
     def __init__(self):
         super().__init__()
         self.setGeometry(100, 100, 300, 300)
@@ -31,16 +33,18 @@ class MainWindow(QtWidgets.QWidget):
 
         # 選択中のラジオボタンのIDを取得するボタン
         button = QtWidgets.QPushButton("IDを取得", self)
-        button.clicked.connect(self.print_radiobutton_id)
+        button.clicked.connect(self._print_radiobutton_id)
         button.move(10, 90)
 
-    # ラジオボタンを表示するメソッド
-    def print_radiobutton_id(self):
+    def _print_radiobutton_id(self):
+        """ラジオボタンの ID を表示する."""
+
         button_id = self.radioGroup.checkedId()  # 選択中のラジオボタンID
         print("Radio Button ID:", button_id)     # ID表示
 
-# アプリの実行と終了
-app = QtWidgets.QApplication()
-window = MainWindow()
-window.show()
-app.exec_()
+
+if __name__ == '__main__':
+    app = QtWidgets.QApplication()
+    window = MainWindow()
+    window.show()
+    app.exec()
