@@ -10,7 +10,7 @@ from PySide6.QtWidgets import QWidget, QApplication, QLineEdit, QVBoxLayout
 
 
 class Model(QObject):
-    """表示に依存しないデータ/ロジック.
+    """表示に依存しないデータ/ロジッククラス.
 
     :param parent: 親オブジェクト
     """
@@ -66,7 +66,7 @@ class Model(QObject):
 
 
 class ViewModel(QObject):
-    """Model の内容を表示用に加工する.
+    """Model の内容を表示用に加工するクラス.
 
     :param model: Model オブジェクト
     :param parent: 親オブジェクト
@@ -117,7 +117,7 @@ class ViewModel(QObject):
 
 
 class View(QWidget):
-    """表示.
+    """表示クラス.
 
     :param viewmodel: ViewModel オブジェクト
     :param parent: 親オブジェクト
