@@ -1,46 +1,97 @@
-"""ModelViewProgramming のサンプル."""
+"""Model/View Programming のサンプル."""
 
-from PySide6 import QtWidgets, QtGui, QtCore
+import typing as tp
+
+from PySide6.QtCore import QAbstractListModel, QModelIndex, Qt
+from PySide6.QtGui import QStandardItem, QStandardItemModel, QIcon
+from PySide6.QtWidgets import QApplication, QComboBox, QVBoxLayout, QWidget, QStyle
 
 
-class MainWindow(QtWidgets.QWidget):
+class MyModel(QAbstractListModel):
+    """独自定義の ListModel クラス."""
+
+    def __init__(self):
+        super().__init__()
+
+        self._items: list[str] = []
+
+    def add(self, text: str) -> None:
+        """アイテムを追加します."""
+
+        self._items.append(text)
+
+    def data(self, index, role) -> tp.Any:
+        """(override) index, role に対応するデータを取得します."""
+
+        if role == Qt.DisplayRole:
+            return self._items[index.row()]
+
+        return None
+
+    def rowCount(self, parent=QModelIndex()) -> int:
+        """(override) 行数を得ます."""
+
+        return len(self._items)
+
+
+def _create_combobox_with_standard_model() -> QComboBox:
+    """QStandardItemModel を利用してコンボボックスを生成する."""
+
+    combobox = QComboBox()
+
+    model = QStandardItemModel()
+    combobox.setModel(model)
+
+    # item1
+    item = QStandardItem('item1')
+    # item.setEnabled(False)  # 項目を選択できなくする
+    # item.setTextAlignment(QtCore.Qt.AlignRight)  # 右寄せ
+    # item.setBackground(QtGui.QColor(255, 0, 0))  # 背景色を赤にする
+    # item.setForeground(QtGui.QColor(0, 0, 255))  # 文字色を青にする
+    # item.setToolTip('ToolTip Text')  # 項目をマウスオーバーした時に出てくるテキスト
+    # item.setStatusTip('StatusTip Text')  # ステータスバーに表示する文字列
+    model.appendRow(item)
+
+    # item2
+    icon = QApplication.style().standardIcon(QStyle.SP_TitleBarMenuButton)  # アイコンも設定可能
+    item = QStandardItem(icon, 'item2')
+    model.appendRow(item)
+
+    return combobox
+
+
+def _create_combobox_with_original_model() -> QComboBox:
+    """独自実装の ItemModel を利用してコンボボックスを生成する."""
+
+    combobox = QComboBox()
+
+    model = MyModel()
+    combobox.setModel(model)
+
+    model.add('item1')
+    model.add('item2')
+    combobox.setCurrentIndex(0)
+
+    return combobox
+
+
+class MainWindow(QWidget):
     """メインウィンドウ."""
 
     def __init__(self):
         super().__init__()
 
-        combobox = self._create_combobox()
+        combobox1 = _create_combobox_with_standard_model()
+        combobox2 = _create_combobox_with_original_model()
 
-        layout = QtWidgets.QVBoxLayout(self)
-        layout.addWidget(combobox)
+        layout = QVBoxLayout(self)
+        layout.addWidget(combobox1)
+        layout.addWidget(combobox2)
         self.setLayout(layout)
-
-    def _create_combobox(self) -> QtWidgets.QComboBox:
-        combobox = QtWidgets.QComboBox()
-
-        model = QtGui.QStandardItemModel()
-        combobox.setModel(model)
-
-        # item1
-        item = QtGui.QStandardItem('text')
-        # item.setEnabled(False)  # 項目を選択できなくする
-        # item.setTextAlignment(QtCore.Qt.AlignRight)  # 右寄せ
-        # item.setBackground(QtGui.QColor(255, 0, 0))  # 背景色を赤にする
-        # item.setForeground(QtGui.QColor(0, 0, 255))  # 文字色を青にする
-        # item.setToolTip('ToolTip Text')  # 項目をマウスオーバーした時に出てくるテキスト
-        # item.setStatusTip('StatusTip Text')  # ステータスバーに表示する文字列
-        model.appendRow(item)
-
-        # item2
-        icon = QtGui.QIcon('statusicon_ok.png')
-        item = QtGui.QStandardItem(icon, 'OK')
-        model.appendRow(item)
-
-        return combobox
 
 
 if __name__ == '__main__':
-    app = QtWidgets.QApplication()
+    app = QApplication()
     window = MainWindow()
     window.show()
     app.exec()
