@@ -3,7 +3,7 @@
 import typing as tp
 
 from PySide6.QtCore import QAbstractListModel, QModelIndex, Qt
-from PySide6.QtGui import QStandardItem, QStandardItemModel, QIcon
+from PySide6.QtGui import QStandardItem, QStandardItemModel
 from PySide6.QtWidgets import QApplication, QComboBox, QVBoxLayout, QWidget, QStyle
 
 
