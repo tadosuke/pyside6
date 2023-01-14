@@ -2,7 +2,7 @@
 
 import typing as tp
 
-from PySide6.QtCore import QAbstractListModel, QModelIndex, Qt
+from PySide6.QtCore import QAbstractListModel, QModelIndex, Qt, QObject
 from PySide6.QtGui import QStandardItem, QStandardItemModel
 from PySide6.QtWidgets import QApplication, QComboBox, QVBoxLayout, QWidget, QStyle
 
@@ -10,7 +10,7 @@ from PySide6.QtWidgets import QApplication, QComboBox, QVBoxLayout, QWidget, QSt
 class MyModel(QAbstractListModel):
     """独自定義の ListModel クラス."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
 
         self._items: list[str] = []
@@ -32,6 +32,28 @@ class MyModel(QAbstractListModel):
         """(override) 行数を得ます."""
 
         return len(self._items)
+
+
+class MyComboBox(QWidget):
+    """MyModel の使用を強制する独自コンボボックス.
+
+    コンボボックスを継承ではなく内包することで、View を直接操作する手段を制限しています。
+    """
+
+    def __init__(self, model: MyModel, parent: QWidget = None) -> None:
+        super().__init__(parent=parent)
+        self._combobox = QComboBox()
+        self._combobox.setModel(model)
+
+        layout = QVBoxLayout(self)
+        layout.addWidget(self._combobox)
+        layout.setContentsMargins(0, 0, 0, 0)
+        self.setLayout(layout)
+
+    def select(self, index: int) -> None:
+        """指定したインデックスのアイテムを選択します."""
+
+        self._combobox.setCurrentIndex(index)
 
 
 def _create_combobox_with_standard_model() -> QComboBox:
@@ -75,18 +97,33 @@ def _create_combobox_with_original_model() -> QComboBox:
     return combobox
 
 
+def _create_original_combobox() -> MyComboBox:
+    """独自コンボボックスを生成する."""
+
+    model = MyModel()
+    combobox = MyComboBox(model)
+
+    model.add('item1')
+    model.add('item2')
+    combobox.select(1)
+
+    return combobox
+
+
 class MainWindow(QWidget):
     """メインウィンドウ."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
 
         combobox1 = _create_combobox_with_standard_model()
         combobox2 = _create_combobox_with_original_model()
+        combobox3 = _create_original_combobox()
 
         layout = QVBoxLayout(self)
         layout.addWidget(combobox1)
         layout.addWidget(combobox2)
+        layout.addWidget(combobox3)
         self.setLayout(layout)
 
 
