@@ -11,7 +11,10 @@ class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
 
-        self._setup_for_normal()
+        # self._setup_for_normal()
+        self._setup_for_format()
+        # self._setup_for_pixmap()
+        # self._setup_for_selection()
         # self._setup_for_buddy()
 
     def _setup_for_normal(self):
@@ -22,39 +25,99 @@ class MainWindow(QWidget):
 
         # テキストを設定
         label.setText('0123456789')
-
-        # テキストを選択できるようにするために必要なフラグ
-        label.setTextInteractionFlags(Qt.TextInteractionFlag.TextBrowserInteraction)
-        # テキストを選択(開始位置, 長さ)
-        label.setSelection(1, 3)
-        # 選択中のテキストを取得
-        print(f'Selected = {label.selectedText()}')
-
         # \n で改行も入れられる
         # label.setText('0123456789\n0123456789\n0123456789\n')
+        print(f'text = {label.text()}')
 
-        # 画像を設定
-        # label.setPixmap(QPixmap("statusicon_ok.png"))
-        # label.setScaledContents(True)  # True にすると、ウィンドウの拡縮に合わせて画像も拡縮される
-
-        # リンクを設定
-        # label.setText('<a href="https://www.google.com/">Google</a>')  # リンクは<a>タグで指定する
-        # label.setOpenExternalLinks(True)  # これを呼ばないと、クリックしても開かない
+        # 折り返し
+        """
+        label.setWordWrap(True)
+        label.setMaximumWidth(50)  # 最大幅
+        label.setText('This is a pen. That one is a cat.')  # 単語の切れ目で改行される
+        """
+        print(f'wordWrap = {label.wordWrap()}')
 
         # テキストを消去
         # label.clear()
 
-        # テキストを取得
-        print(label.text())
+        # アラインメント
+        # label.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignBottom)  # 右下寄せ
+        print(f'alignment = {label.alignment()}')
 
-        # 右下寄せ
-        # label.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignBottom)
-
-        # インデントを設定
+        # インデント
         # label.setIndent(20)
+        print(f'indent = {label.indent()}')
 
-        # マージンを設定
-        # label.setMargin(30)
+        # マージン
+        label.setMargin(30)
+        print(f'margin = {label.margin()}')
+
+        layout = QVBoxLayout(self)
+        layout.addWidget(label)
+        self.setLayout(layout)
+
+    def _setup_for_pixmap(self):
+        """setPixmap 確認用にセットアップします."""
+
+        label = QLabel()
+
+        label.setPixmap(QPixmap("statusicon_ok.png"))
+        print(f'pixmap = {label.pixmap()}')
+        label.setScaledContents(True)  # True にすると、ウィンドウの拡縮に合わせて画像も拡縮される
+        print(f'hasScaledContents = {label.hasScaledContents()}')
+
+        layout = QVBoxLayout(self)
+        layout.addWidget(label)
+        self.setLayout(layout)
+
+    def _setup_for_format(self):
+        """setTextFormat 確認用にセットアップします."""
+
+        label = QLabel()
+
+        # リッチテキスト
+        label.setText('<a href="https://www.google.com/">Google</a>')
+        label.setTextFormat(Qt.TextFormat.RichText)
+        label.setOpenExternalLinks(True)  # これを呼ばないと、クリックしても開かない
+        label.linkActivated.connect(lambda link: print(f'linkActivated(link={link})'))  # クリック時の処理
+        label.linkHovered.connect(lambda link: print(f'linkHovered(link={link})'))  # ホバー時の処理
+
+        print(f'openExternalLinks = {label.openExternalLinks()}')
+
+        # マークダウン
+        """
+        label.setText(
+            '# 見出し\n'
+            '- リスト\n')
+        label.setTextFormat(Qt.TextFormat.MarkdownText)
+        """
+
+        # プレーンテキスト
+        """
+        label.setText('<a href="https://www.google.com/">Google</a>')  # タグを指定しても無視される
+        label.setTextFormat(Qt.TextFormat.PlainText)
+        """
+
+        print(f'textFormat = {label.textFormat()}')
+
+        layout = QVBoxLayout(self)
+        layout.addWidget(label)
+        self.setLayout(layout)
+
+    def _setup_for_selection(self):
+        """setSelection 確認用にセットアップします."""
+
+        label = QLabel('0123456789')
+
+        # テキストを選択できるようにするために必要なフラグ
+        label.setTextInteractionFlags(Qt.TextInteractionFlag.TextBrowserInteraction)
+        print(f'textInteractionFlags = {label.textInteractionFlags()}')
+
+        # テキストを選択(開始位置, 長さ)
+        label.setSelection(1, 3)
+        print(f'selectedText = {label.selectedText()}')
+        print(f'hasSelectedText = {label.hasSelectedText()}')
+        print(f'selectionStart = {label.selectionStart()}')
 
         layout = QVBoxLayout(self)
         layout.addWidget(label)
