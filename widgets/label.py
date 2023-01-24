@@ -11,8 +11,9 @@ class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
 
-        # self._setup_for_normal()
-        self._setup_for_format()
+        # 確認したい機能のコメントアウトを外してください
+        self._setup_for_normal()
+        # self._setup_for_format()
         # self._setup_for_pixmap()
         # self._setup_for_selection()
         # self._setup_for_buddy()
@@ -49,7 +50,7 @@ class MainWindow(QWidget):
         print(f'indent = {label.indent()}')
 
         # マージン
-        label.setMargin(30)
+        # label.setMargin(30)
         print(f'margin = {label.margin()}')
 
         layout = QVBoxLayout(self)
@@ -81,7 +82,6 @@ class MainWindow(QWidget):
         label.setOpenExternalLinks(True)  # これを呼ばないと、クリックしても開かない
         label.linkActivated.connect(lambda link: print(f'linkActivated(link={link})'))  # クリック時の処理
         label.linkHovered.connect(lambda link: print(f'linkHovered(link={link})'))  # ホバー時の処理
-
         print(f'openExternalLinks = {label.openExternalLinks()}')
 
         # マークダウン
@@ -142,6 +142,10 @@ class MainWindow(QWidget):
         label1.setBuddy(edit1)
         label2.setBuddy(edit2)
         label3.setBuddy(edit3)
+
+        print(f'Buddy1 = {label1.buddy()}')
+        print(f'Buddy2 = {label2.buddy()}')
+        print(f'Buddy3 = {label3.buddy()}')
 
         layout = QGridLayout(self)
         layout.addWidget(label1, 0, 0)
