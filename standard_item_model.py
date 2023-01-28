@@ -1,13 +1,55 @@
 """QStandardItemModel のサンプル."""
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QItemSelection, QItemSelectionModel
 from PySide6.QtGui import QStandardItem, QStandardItemModel, QColor
 from PySide6.QtWidgets import QApplication, QComboBox, QWidget, QStyle, QMainWindow, QStatusBar, QListView, QTreeView
+
+
+def _test_model() -> None:
+    """QStandardItemModel 機能のテスト."""
+
+    print('[TestModel]')
+    model = QStandardItemModel()
+
+    # アイテム変更時に呼ばれるシグナル
+    model.itemChanged.connect(_on_item_changed)
+
+    # アイテムの追加：itemChanged は呼ばれない
+    model.appendRow(QStandardItem('item1'))
+    model.appendRow(QStandardItem('item2'))
+    model.appendRow(QStandardItem('item3'))
+
+    # row を指定したアイテム取得
+    item = model.item(1)
+    print(f'text={item.text()}')
+    # 編集：itemChanged が呼ばれる
+    item.setData('item2_', Qt.ItemDataRole.DisplayRole)
+
+    # テキストによるアイテム検索
+    item = model.findItems('item3')[0]
+    print(f'text={item.text()}')
+    # アイテムから index を取得
+    print(f'index={model.indexFromItem(item)}')
+
+    # アイテムのソート（降順）
+    # model.sort(0, Qt.SortOrder.DescendingOrder)
+
+    # MIMEデータ
+    # 　ドラッグ＆ドロップで転送できる情報を記述するために使用される
+    print(f'mimeTypes={model.mimeTypes()}')
+    print(f'mimeData={model.mimeData([item.index()])}')
+
+
+def _on_item_changed(item: QStandardItem) -> None:
+    """アイテムが変更された時に呼ばれる."""
+
+    print(f'itemChanged({item.text()})')
 
 
 def _create_combobox() -> QComboBox:
     """QComboBox を生成する."""
 
+    print('[TestComboBox]')
     model = QStandardItemModel()
 
     # テキスト
@@ -37,14 +79,22 @@ def _create_combobox() -> QComboBox:
     item.setSelectable(False)
     model.appendRow(item)
 
+    # 独自ロール
+    item = QStandardItem('item6')
+    item.setData('Hoge', Qt.ItemDataRole.UserRole)
+    print(f'UserRole = {item.data(Qt.ItemDataRole.UserRole)}')
+    model.appendRow(item)
+
     widget = QComboBox()
     widget.setModel(model)
+
     return widget
 
 
 def _create_listview() -> QListView:
     """QListView を生成する."""
 
+    print('[TestListView]')
     model = QStandardItemModel()
 
     # テキスト
@@ -76,12 +126,35 @@ def _create_listview() -> QListView:
 
     widget = QListView()
     widget.setModel(model)
+
+    # 選択モデル
+    selection = widget.selectionModel()
+    selection.selectionChanged.connect(_on_selection_changed)
+    index = model.index(1, 0)  # row=1 のアイテムを...
+    selection.select(index, QItemSelectionModel.SelectionFlag.Select)  # 選択。selectionChangedが呼ばれる
+    selection.clear()  # 選択解除。selectionChangedが呼ばれる
+    print(f'isRowSelected(1) = {selection.isRowSelected(1)}')
+    print(f'isIndexSelected(1, 0) = {selection.isSelected(index)}')
+
     return widget
+
+
+def _on_selection_changed(selected: QItemSelection, deselected: QItemSelection) -> None:
+    """選択状態が変化した時に呼ばれる.
+    
+    :param selected: 選択された項目
+    :param deselected: 非選択になった項目
+    """
+
+    print(f'[selectionChanged]\n'
+          f'  selected={selected.data()}\n'
+          f'  deselected={deselected.data()})')
 
 
 def _create_treeview() -> QTreeView:
     """QTreeView を生成する."""
 
+    print('[TestTreeView]')
     model = QStandardItemModel()
 
     # テキスト
@@ -115,9 +188,12 @@ class MainWindow(QMainWindow):
     def __init__(self, parent: QWidget = None) -> None:
         super().__init__(parent)
 
+        # _test_model()
+
+        # widget = QWidget()
         # widget = _create_combobox()
-        # widget = _create_listview()
-        widget = _create_treeview()
+        widget = _create_listview()
+        # widget = _create_treeview()
 
         self.setCentralWidget(widget)
         self.setStatusBar(QStatusBar())
