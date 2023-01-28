@@ -1,8 +1,9 @@
 """QStandardItemModel のサンプル."""
 
 from PySide6.QtCore import Qt, QItemSelection, QItemSelectionModel
-from PySide6.QtGui import QStandardItem, QStandardItemModel, QColor
-from PySide6.QtWidgets import QApplication, QComboBox, QWidget, QStyle, QMainWindow, QStatusBar, QListView, QTreeView
+from PySide6.QtGui import QStandardItem, QStandardItemModel, QColor, QBrush
+from PySide6.QtWidgets import QApplication, QComboBox, QWidget, QStyle, QMainWindow, QStatusBar, QListView, QTreeView, \
+    QTableView
 
 
 def _test_model() -> None:
@@ -139,6 +140,52 @@ def _create_listview() -> QListView:
     return widget
 
 
+def _create_tableview() -> QTableView:
+    """QTableView を生成する."""
+
+    print('[TestTableView]')
+    model = QStandardItemModel()
+
+    # ツールチップ、ステータスバーテキスト
+    item1 = QStandardItem('item1')
+    item1.setToolTip('ToolTip')
+    item1.setStatusTip('StatusTip')
+
+    # 編集不可
+    item2 = QStandardItem('item2')
+    item2.setEditable(False)
+
+    # 選択不可・無効
+    item3 = QStandardItem('item3')
+    item3.setSelectable(False)
+    item3.setEnabled(False)
+
+    # チェック可能
+    item4 = QStandardItem('item4')
+    item4.setCheckable(True)
+    item4.setCheckState(Qt.CheckState.Checked)
+
+    # スタイル
+    item5 = QStandardItem('item5')
+    item5.setTextAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)  # 右寄せ
+    item5.setBackground(QColor('red'))
+    item5.setForeground(QColor(255, 255, 255))
+
+    # アイコン
+    item6 = QStandardItem('item6')
+    icon = QApplication.style().standardIcon(QStyle.SP_TitleBarMenuButton)
+    item6.setIcon(icon)
+
+    model.appendRow([item1, item2])
+    model.appendRow([item3, item4])
+    model.appendRow([item5, item6])
+
+    widget = QTableView()
+    widget.setModel(model)
+
+    return widget
+
+
 def _on_selection_changed(selected: QItemSelection, deselected: QItemSelection) -> None:
     """選択状態が変化した時に呼ばれる.
     
@@ -192,7 +239,8 @@ class MainWindow(QMainWindow):
 
         # widget = QWidget()
         # widget = _create_combobox()
-        widget = _create_listview()
+        # widget = _create_listview()
+        widget = _create_tableview()
         # widget = _create_treeview()
 
         self.setCentralWidget(widget)
