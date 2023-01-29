@@ -2,9 +2,8 @@
 
 import typing as tp
 
-from PySide6.QtCore import QAbstractListModel, QModelIndex, Qt, QObject
-from PySide6.QtGui import QStandardItem, QStandardItemModel
-from PySide6.QtWidgets import QApplication, QComboBox, QVBoxLayout, QWidget, QStyle
+from PySide6.QtCore import QAbstractListModel, QModelIndex, Qt
+from PySide6.QtWidgets import QApplication, QComboBox, QVBoxLayout, QWidget
 
 
 class MyModel(QAbstractListModel):
@@ -56,32 +55,6 @@ class MyComboBox(QWidget):
         self._combobox.setCurrentIndex(index)
 
 
-def _create_combobox_with_standard_model() -> QComboBox:
-    """QStandardItemModel を利用してコンボボックスを生成する."""
-
-    combobox = QComboBox()
-
-    model = QStandardItemModel()
-    combobox.setModel(model)
-
-    # item1
-    item = QStandardItem('item1')
-    # item.setEnabled(False)  # 項目を選択できなくする
-    # item.setTextAlignment(QtCore.Qt.AlignRight)  # 右寄せ
-    # item.setBackground(QtGui.QColor(255, 0, 0))  # 背景色を赤にする
-    # item.setForeground(QtGui.QColor(0, 0, 255))  # 文字色を青にする
-    # item.setToolTip('ToolTip Text')  # 項目をマウスオーバーした時に出てくるテキスト
-    # item.setStatusTip('StatusTip Text')  # ステータスバーに表示する文字列
-    model.appendRow(item)
-
-    # item2
-    icon = QApplication.style().standardIcon(QStyle.SP_TitleBarMenuButton)  # アイコンも設定可能
-    item = QStandardItem(icon, 'item2')
-    model.appendRow(item)
-
-    return combobox
-
-
 def _create_combobox_with_original_model() -> QComboBox:
     """独自実装の ItemModel を利用してコンボボックスを生成する."""
 
@@ -116,14 +89,12 @@ class MainWindow(QWidget):
     def __init__(self) -> None:
         super().__init__()
 
-        combobox1 = _create_combobox_with_standard_model()
-        combobox2 = _create_combobox_with_original_model()
-        combobox3 = _create_original_combobox()
+        combobox1 = _create_combobox_with_original_model()
+        combobox2 = _create_original_combobox()
 
         layout = QVBoxLayout(self)
         layout.addWidget(combobox1)
         layout.addWidget(combobox2)
-        layout.addWidget(combobox3)
         self.setLayout(layout)
 
 
