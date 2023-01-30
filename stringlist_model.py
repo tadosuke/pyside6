@@ -1,7 +1,7 @@
 """QStringListModel のサンプル."""
 
-from PySide6.QtCore import QStringListModel, QModelIndex
-from PySide6.QtWidgets import QApplication, QComboBox, QWidget, QMainWindow, QStatusBar, QListView, QTableView
+from PySide6.QtCore import QStringListModel, QModelIndex, Qt
+from PySide6.QtWidgets import QApplication, QComboBox, QWidget, QMainWindow, QListView, QTableView
 
 
 def _on_data_changed(top_left: QModelIndex, bottom_right: QModelIndex) -> None:
@@ -18,6 +18,9 @@ def _create_combobox() -> QComboBox:
     model.setStringList(['item1', 'item2', 'item3'])
     print(f'stringsList = {model.stringList()}')
 
+    # 降順に並び替える
+    model.sort(0, Qt.SortOrder.DescendingOrder)
+
     widget = QComboBox()
     widget.setModel(model)
 
@@ -27,9 +30,8 @@ def _create_combobox() -> QComboBox:
 def _create_listview() -> QListView:
     """QListView を生成する."""
 
-    model = QStringListModel()
+    model = QStringListModel(['item1', 'item2', 'item3'])
     model.dataChanged.connect(_on_data_changed)
-    model.setStringList(['item1', 'item2', 'item3'])
 
     # 行の挿入もできるが、item を直接指定できないため使いにくい
     model.insertRow(2)
@@ -67,7 +69,7 @@ class MainWindow(QMainWindow):
         # widget = _create_tableview()
 
         self.setCentralWidget(widget)
-        self.setStatusBar(QStatusBar())
+        # self.setStatusBar(QStatusBar())
 
 
 if __name__ == '__main__':
