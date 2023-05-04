@@ -1,4 +1,4 @@
-"""ウィジェットアイコンを設定/取得する."""
+"""ウィンドウアイコンを設定/取得する."""
 
 from PySide6 import QtGui
 from PySide6 import QtWidgets
@@ -6,9 +6,9 @@ from PySide6 import QtWidgets
 app = QtWidgets.QApplication()
 window = QtWidgets.QWidget()
 
-# アイコンの設定
+# 設定
 window.setWindowIcon(QtGui.QIcon("images/icon.png"))
-# アイコンの取得
+# 取得
 print(window.windowIcon())
 
 window.show()
