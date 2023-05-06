@@ -13,7 +13,8 @@ window.setStyleSheet(
 )
 
 # 取得
-print(window.styleSheet())  # "background-color: yellow;"
+print(window.styleSheet())
+#  background-color: yellow;color: red;margin: 10px;border: dashed red;
 
 window.show()
 app.exec()
