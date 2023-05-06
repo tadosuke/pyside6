@@ -16,7 +16,7 @@ class MainWindow(QMainWindow):
         file_menu = menu_bar.addMenu('File')
         file_menu.addAction(exit_action)  # メニューにアクションを追加
 
-        # file_menu.removeAction(exit_action)  # アクションを削除
+        file_menu.removeAction(exit_action)  # アクションを削除
         print(f'{file_menu.actions()=}')  # アクションを取得
 
 
