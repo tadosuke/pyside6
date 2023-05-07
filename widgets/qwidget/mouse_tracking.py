@@ -1,4 +1,4 @@
-"""マウスイベントを監視する."""
+"""マウスカーソルの動きを監視する."""
 
 from PySide6 import QtGui
 from PySide6 import QtWidgets
@@ -13,6 +13,7 @@ class MyWidget(QtWidgets.QWidget):
 
         # マウス追跡を有効化
         self.setMouseTracking(True)
+        print(f'{self.hasMouseTracking()=}')
 
         self.label = QtWidgets.QLabel('pos(0, 0)')
         layout = QtWidgets.QVBoxLayout()
