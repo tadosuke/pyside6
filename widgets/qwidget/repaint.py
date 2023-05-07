@@ -1,4 +1,4 @@
-"""ウィジェットを明示的に再描画する."""
+"""ウィジェットの再描画を要求する."""
 
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QPainter, QMouseEvent
@@ -20,8 +20,8 @@ class RandomCircleWidget(QWidget):
             y = int(pos.y())
             self.circles.append((x, y, QColor(127, 127, 127)))
 
-            # ウィジェットを再描画（これを呼ばないとクリック時に描画されない）
-            self.update()
+            # ウィジェットの再描画を要求（これを呼ばないとクリック時に描画されない）
+            self.repaint()
 
     def paintEvent(self, event):
         # 円を描画
