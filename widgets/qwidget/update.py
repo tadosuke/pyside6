@@ -21,7 +21,8 @@ class RandomCircleWidget(QWidget):
             self.circles.append((x, y, QColor(127, 127, 127)))
 
             # ウィジェットの再描画を要求（これを呼ばないとクリック時に描画されない）
-            self.repaint()
+            self.update()
+            # self.repaint()  # repaint() でもできるが、連続で呼ぶと重くなるので非推奨
 
     def paintEvent(self, event):
         # 円を描画
