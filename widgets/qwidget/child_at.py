@@ -1,6 +1,6 @@
 """指定された座標にある子ウィジェットを取得する."""
 
-from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout
+from PySide6.QtWidgets import QApplication, QWidget, QPushButton
 
 app = QApplication()
 window = QWidget()
