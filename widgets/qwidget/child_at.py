@@ -1,11 +1,10 @@
 """指定された座標にある子ウィジェットを取得する."""
 
-from PySide6.QtWidgets import QApplication, QWidget, QPushButton
+from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout
 
 app = QApplication()
 window = QWidget()
 
-# レイアウトを作成
 button = QPushButton('button', parent=window)
 button.move(10, 10)
 
