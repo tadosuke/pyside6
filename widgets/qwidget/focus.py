@@ -15,8 +15,11 @@ window.setLayout(layout)
 window.show()
 
 # 設定
-#edit1.setFocus()
+# edit1.setFocus()
 edit2.setFocus()
+
+# 削除
+# edit2.clearFocus()
 
 # 取得
 print(edit1.hasFocus())
