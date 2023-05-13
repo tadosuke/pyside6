@@ -11,7 +11,7 @@ window = QtWidgets.QWidget()
 window.setAttribute(Qt.WidgetAttribute.WA_AcceptDrops)
 
 # 取得
-print(window.testAttribute(Qt.WidgetAttribute.WA_AcceptDrops))
+print(window.testAttribute(Qt.WidgetAttribute.WA_AcceptDrops))  # True
 print(window.acceptDrops())  # 同じ効果
 
 window.show()
