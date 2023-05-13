@@ -13,6 +13,6 @@ button2.move(0, 30)
 
 window.show()
 window.scroll(20, 20)  # 右下に 20 px ずつスクロール
-print(window.childAt(0, 0))  # 実際にウィジェットが移動する
+print(window.childAt(0, 0))  # 実際にウィジェットが移動するので、元の位置からは取得できない
 
 app.exec()
