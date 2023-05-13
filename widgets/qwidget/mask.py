@@ -8,8 +8,13 @@ button = QPushButton('Button', parent=window)
 
 # 円形のマスクを定義
 mask = QRegion(2, 2, 70, 20, QRegion.Ellipse)
+
 # 設定
 button.setMask(mask)
+
+# クリア
+# button.clearMask()
+
 # 取得
 print(button.mask())
 
