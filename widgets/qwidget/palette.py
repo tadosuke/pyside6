@@ -24,6 +24,8 @@ window.setPalette(window_palette)
 # label.setAutoFillBackground(True)  # ウィンドウの場合は指定しなくても塗りつぶされる
 
 # 取得
+print(window.autoFillBackground())
+print(label.autoFillBackground())
 print(window_palette.color(QPalette.ColorRole.Window))
 print(label_palette.color(QPalette.ColorRole.Window))
 
