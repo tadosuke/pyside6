@@ -8,7 +8,7 @@ window = QWidget()
 
 # 親を指定せずにボタンを生成
 button = QPushButton("Click Me!")
-button.destroyed.connect(lambda _: print('ボタンが破棄されました。'))
+button.destroyed.connect(lambda _: print('destroyed'))
 
 # window の削除予約
 window.deleteLater()
