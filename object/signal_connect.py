@@ -4,19 +4,32 @@ from PySide6.QtCore import QObject, Signal, QMetaMethod
 
 
 def slot():
-    pass
+    print('slot')
 
 class MyObject(QObject):
-    my_signal = Signal()
+    something_done = Signal()
+
+    def do_something(self):
+        self.something_done.emit()
 
 
 obj = MyObject()
-obj.my_signal.connect(slot)
 
-meta_method = QMetaMethod.fromSignal(obj.my_signal)
+# 接続
+obj.something_done.connect(slot)
+
+# シグナルが接続されているかを調べる
+meta_method = QMetaMethod.fromSignal(obj.something_done)
 print(obj.isSignalConnected(meta_method))
 #  True
 
-obj.my_signal.disconnect(slot)
+obj.do_something()
+#  slot
+
+# 切断
+obj.something_done.disconnect(slot)
+
+obj.do_something()
+#  (何も表示されない)
 print(obj.isSignalConnected(meta_method))
 #  False
