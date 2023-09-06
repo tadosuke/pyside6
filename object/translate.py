@@ -8,6 +8,7 @@ class MyObject(QObject):
     def __init__(self) -> None:
         super().__init__()
         print(self.tr("Hello!"))
+        #  翻訳データを読み込んでいれば、翻訳テキストが代わりに表示される
 
 
 if __name__ == "__main__":
