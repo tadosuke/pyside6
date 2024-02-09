@@ -1,4 +1,4 @@
-"""オブジェクトに親を設定し忘れるサンプル：悪い例."""
+"""オブジェクトに親を設定し忘れるサンプル：よい例."""
 
 from PySide6.QtWidgets import QApplication, QWidget, QPushButton
 
