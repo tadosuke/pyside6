@@ -11,7 +11,10 @@ from usecase.outputboundary import OutputData
 
 
 class Presenter(QObject):
-    """UseCase 層から受け取ったデータを View が表示しやすい形式に加工するクラス."""
+    """UseCase 層から受け取ったデータを View が表示しやすい形式に加工するクラス.
+
+    :param parent: 親オブジェクト
+    """
 
     #: View の更新を要求するシグナル
     update_view = Signal(object)

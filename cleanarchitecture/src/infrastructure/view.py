@@ -28,7 +28,7 @@ class MainWindow(QMainWindow):
         self._presenter.update_view.connect(self._update_view)
 
     def _update_view(self, view_model: ViewModel) -> None:
-        """ビューを更新する.
+        """Presenter から渡された ViewModel を基にビューを更新する.
 
         :param view_model: 表示内容を表すビューモデル
         """
