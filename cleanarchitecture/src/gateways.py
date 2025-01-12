@@ -1,5 +1,0 @@
-"""ゲートウェイモジュール."""
-
-
-class Gateway:
-    pass
