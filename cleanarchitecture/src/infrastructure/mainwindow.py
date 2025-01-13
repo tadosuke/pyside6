@@ -1,6 +1,6 @@
 """View モジュール."""
-
-from PySide6.QtWidgets import QMainWindow, QWidget, QFormLayout, QLineEdit, QSpinBox
+from PySide6.QtGui import QAction
+from PySide6.QtWidgets import QMainWindow, QWidget, QMenu
 
 from adapter.controller import Controller
 from adapter.presenter import Presenter, ViewModel
@@ -28,10 +28,26 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle('MainWindow')
 
+        self._create_menu()
         self._create_children()
+
         self.setCentralWidget(self._parameter_widget)
 
         self._connect_signals()
+
+    def _create_menu(self) -> None:
+        """メニューを作成する."""
+        self._create_file_menu()
+
+    def _create_file_menu(self) -> None:
+        """ファイルメニューを作成する."""
+        menubar = self.menuBar()
+        file_menu = menubar.addMenu("ファイル")
+
+        # 保存
+        save_action = QAction("保存", self)
+        save_action.triggered.connect(self._save)
+        file_menu.addAction(save_action)
 
     def _create_children(self) -> None:
         """子ウィジェットを生成する."""
@@ -47,3 +63,7 @@ class MainWindow(QMainWindow):
         :param view_model: 表示内容を表すビューモデル
         """
         self._parameter_widget.update_view(view_model)
+
+    def _save(self) -> None:
+        """保存メニューが選択されたときの処理."""
+        print("保存がクリックされました")
