@@ -22,4 +22,5 @@ class InputBoundary(metaclass=ABCMeta):
 class InputData:
     """Controller からの入力データ."""
 
-    id: int = 0
+    name: str
+    hp: int

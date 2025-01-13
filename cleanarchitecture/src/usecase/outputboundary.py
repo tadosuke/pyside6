@@ -1,9 +1,11 @@
-"""Presenter 層にデータ渡す出力用インターフェース."""
+"""Presetner にデータ渡す出力用インターフェース."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 import typing as tp
+
+from entity.enemyparameter import EnemyParameter
 
 
 class OutputBoundary(tp.Protocol):
@@ -15,5 +17,6 @@ class OutputBoundary(tp.Protocol):
 
 @dataclass
 class OutputData:
+    """Presenter に渡すデータ."""
 
-    id: int = 0
+    parameter: EnemyParameter
