@@ -18,6 +18,20 @@ class TestController(unittest.TestCase):
 
         self.assertIsInstance(controller._input_boundary, InputBoundary)
 
+    def test_set_name(self):
+        """名前を設定できるか？"""
+        controller = Controller(self._input_boundary)
+        controller.set_name('Goblin')
+
+        # todo
+
+    def test_set_hp(self):
+        """HP を設定できるか？"""
+        controller = Controller(self._input_boundary)
+        controller.set_hp(20)
+
+        # todo
+
 
 if __name__ == "__main__":
     unittest.main()

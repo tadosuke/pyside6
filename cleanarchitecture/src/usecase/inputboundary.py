@@ -3,24 +3,15 @@
 from __future__ import annotations
 
 from abc import ABCMeta, abstractmethod
-from dataclasses import dataclass
 
 
 class InputBoundary(metaclass=ABCMeta):
     """Controller 層から入力を受け取るインターフェース."""
 
     @abstractmethod
-    def input(self, data: InputData) -> None:
-        """Controller からの入力.
-
-        :param data: 入力データ
-        """
+    def set_name(self, name: str) -> None:
         ...
 
-
-@dataclass
-class InputData:
-    """Controller からの入力データ."""
-
-    name: str
-    hp: int
+    @abstractmethod
+    def set_hp(self, hp: int) -> None:
+        ...

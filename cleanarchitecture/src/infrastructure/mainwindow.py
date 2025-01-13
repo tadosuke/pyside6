@@ -35,7 +35,7 @@ class MainWindow(QMainWindow):
 
     def _create_children(self) -> None:
         """子ウィジェットを生成する."""
-        self._parameter_widget = ParameterWidget()
+        self._parameter_widget = ParameterWidget(self._controller)
 
     def _connect_signals(self) -> None:
         """シグナルを接続する."""

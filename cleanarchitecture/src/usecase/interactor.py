@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 from entity.enemyparameter import EnemyParameter
-from usecase.inputboundary import InputBoundary, InputData
-from usecase.outputboundary import OutputBoundary
+from usecase.inputboundary import InputBoundary
+from usecase.outputboundary import OutputBoundary, OutputData
 
 
 class UseCaseInteractor(InputBoundary):
@@ -16,13 +16,28 @@ class UseCaseInteractor(InputBoundary):
     def __init__(
             self,
             output: OutputBoundary = None) -> None:
-        self._enemy_param_dict: dict[str, EnemyParameter] = {}
+        self._enemy_param = EnemyParameter()
         self._output = output
 
-    def input(self, input_data: InputData) -> None:
-        """(override)コントローラからの入力を受け取る."""
-        # input_data を使って Entity を操作する
-        param = EnemyParameter()
-        param.name = input_data.name
-        param.hp = input_data.hp
-        self._enemy_param_dict[input_data.name] = param
+    def set_name(self, name: str) -> None:
+        """(override)名前を設定する.
+
+        :param name: 名前
+        """
+        self._enemy_param.name = name
+        self._output_parameter()
+
+    def set_hp(self, hp: int) -> None:
+        """(override)HP を設定する.
+
+        :param hp: HP
+        """
+        self._enemy_param.hp = hp
+        self._output_parameter()
+
+    def _output_parameter(self) -> None:
+        if self._output is None:
+            return
+
+        data = OutputData(self._enemy_param)
+        self._output.output(data)
