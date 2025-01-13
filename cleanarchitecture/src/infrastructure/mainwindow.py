@@ -46,4 +46,4 @@ class MainWindow(QMainWindow):
 
         :param view_model: 表示内容を表すビューモデル
         """
-        pass
+        self._parameter_widget.update_view(view_model)

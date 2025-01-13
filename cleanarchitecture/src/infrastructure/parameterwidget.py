@@ -2,6 +2,7 @@
 
 from PySide6.QtWidgets import QWidget, QLineEdit, QSpinBox, QFormLayout
 
+from adapter.presenter import ViewModel
 from entity.enemyparameter import EnemyParameter
 
 
@@ -15,6 +16,13 @@ class ParameterWidget(QWidget):
         super().__init__(parent=parent)
         self._create_children()
         self._create_layout()
+
+    def update_view(self, view_model: ViewModel) -> None:
+        """ViewModel の内容をもとにビューを更新する.
+
+        :param view_model: ViewModel
+        """
+        pass
 
     def _create_children(self) -> None:
         self._name_edit = QLineEdit('', parent=self)
