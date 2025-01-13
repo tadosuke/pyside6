@@ -2,6 +2,8 @@
 
 from PySide6.QtWidgets import QWidget, QLineEdit, QSpinBox, QFormLayout
 
+from entity.enemyparameter import EnemyParameter
+
 
 class ParameterWidget(QWidget):
     """パラメータ設定ウィジェット.
@@ -17,10 +19,10 @@ class ParameterWidget(QWidget):
     def _create_children(self) -> None:
         self._name_edit = QLineEdit('', parent=self)
 
-        self._hp_spin_box = QSpinBox()
+        self._hp_spin_box = QSpinBox(parent=self)
         self._hp_spin_box.setValue(0)
-        self._hp_spin_box.setMinimum(0)
-        self._hp_spin_box.setMaximum(99999)
+        self._hp_spin_box.setMinimum(EnemyParameter.HP_MIN)
+        self._hp_spin_box.setMaximum(EnemyParameter.HP_MAX)
 
     def _create_layout(self):
         layout = QFormLayout()
