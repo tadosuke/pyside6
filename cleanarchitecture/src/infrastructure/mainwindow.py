@@ -1,6 +1,6 @@
 """View モジュール."""
 from PySide6.QtGui import QAction
-from PySide6.QtWidgets import QMainWindow, QWidget, QMenu
+from PySide6.QtWidgets import QMainWindow, QWidget
 
 from adapter.controller import Controller
 from adapter.presenter import Presenter, ViewModel
@@ -66,4 +66,4 @@ class MainWindow(QMainWindow):
 
     def _save(self) -> None:
         """保存メニューが選択されたときの処理."""
-        print("保存がクリックされました")
+        self._controller.save()

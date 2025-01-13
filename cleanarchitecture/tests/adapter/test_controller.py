@@ -35,6 +35,14 @@ class TestController(unittest.TestCase):
             controller.set_hp(20)
             mp_set.assert_called_once_with(20)
 
+    def test_save(self):
+        """保存時、InputBoundary 側の関数が呼ばれるか？"""
+        controller = Controller(self._input_boundary)
+
+        with mock.patch.object(self._input_boundary, 'save') as mp_set:
+            controller.save()
+            mp_set.assert_called_once()
+
 
 if __name__ == "__main__":
     unittest.main()

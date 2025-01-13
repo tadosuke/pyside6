@@ -41,6 +41,13 @@ class TestUseCaseInteractor(unittest.TestCase):
         exp_data = OutputData(use_case._enemy_param)
         self._mock_output.output.assert_called_once_with(exp_data)
 
+    def test_save(self):
+        """保存できるか？"""
+        use_case = UseCaseInteractor(output=self._mock_output)
+        use_case.save()
+        
+        # todo
+
 
 if __name__ == "__main__":
     unittest.main()

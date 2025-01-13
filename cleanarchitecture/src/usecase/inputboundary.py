@@ -15,3 +15,7 @@ class InputBoundary(metaclass=ABCMeta):
     @abstractmethod
     def set_hp(self, hp: int) -> None:
         ...
+
+    @abstractmethod
+    def save(self) -> None:
+        ...

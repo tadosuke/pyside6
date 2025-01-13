@@ -35,6 +35,11 @@ class UseCaseInteractor(InputBoundary):
         self._enemy_param.hp = hp
         self._output_parameter()
 
+    def save(self) -> None:
+        """(override)保存する."""
+        # todo
+        print('Interactor.save')
+
     def _output_parameter(self) -> None:
         if self._output is None:
             return

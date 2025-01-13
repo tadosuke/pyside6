@@ -22,3 +22,7 @@ class Controller:
     def set_hp(self, hp: int) -> None:
         """HP を設定する."""
         self._input_boundary.set_hp(hp)
+
+    def save(self) -> None:
+        """現在の設定を保存する."""
+        self._input_boundary.save()
