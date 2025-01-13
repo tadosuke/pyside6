@@ -26,6 +26,52 @@ class TestHp(unittest.TestCase):
         with self.assertRaises(ValueError):
             Hp(Hp.MAX + 1)
 
+    def test_comparisons(self):
+        """比較演算子が正しく機能するか？"""
+        hp1 = Hp(50)
+        hp2 = Hp(100)
+        hp3 = Hp(50)
+
+        self.assertTrue(hp1 == hp3)
+        self.assertFalse(hp1 == hp2)
+        self.assertTrue(hp1 != hp2)
+
+        self.assertTrue(hp1 < hp2)
+        self.assertFalse(hp2 < hp1)
+
+        self.assertTrue(hp1 <= hp3)
+        self.assertTrue(hp1 <= hp2)
+        self.assertFalse(hp2 <= hp1)
+
+        self.assertTrue(hp2 > hp1)
+        self.assertFalse(hp1 > hp2)
+
+        self.assertTrue(hp1 >= hp3)
+        self.assertTrue(hp2 >= hp1)
+        self.assertFalse(hp1 >= hp2)
+
+    def test_comparison_with_non_hp(self):
+        """Hp 以外のクラスと比較しようとした際にエラーが発生するか？"""
+        hp = Hp(50)
+
+        with self.assertRaises(TypeError):
+            hp == 50
+
+        with self.assertRaises(TypeError):
+            hp != 50
+
+        with self.assertRaises(TypeError):
+            hp < 50
+
+        with self.assertRaises(TypeError):
+            hp <= 50
+
+        with self.assertRaises(TypeError):
+            hp > 50
+
+        with self.assertRaises(TypeError):
+            hp >= 50
+
 
 if __name__ == "__main__":
     unittest.main()
