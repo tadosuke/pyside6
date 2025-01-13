@@ -4,7 +4,7 @@ from PySide6.QtWidgets import QApplication
 
 from adapter.controller import Controller
 from adapter.presenter import Presenter
-from infrastructure.view import MainWindow
+from infrastructure.mainwindow import MainWindow
 from usecase.interactor import UseCaseInteractor
 
 

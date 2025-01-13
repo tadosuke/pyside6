@@ -1,16 +1,17 @@
 """View モジュール."""
 
-from PySide6.QtWidgets import QMainWindow, QWidget
+from PySide6.QtWidgets import QMainWindow, QWidget, QFormLayout, QLineEdit, QSpinBox
 
 from adapter.controller import Controller
 from adapter.presenter import Presenter, ViewModel
+from infrastructure.parameterwidget import ParameterWidget
 
 
 class MainWindow(QMainWindow):
     """メインウィンドウクラス.
 
-    :param controller: View の入力を usecase 層に伝えるためのコントローラ
-    :param presenter: usecase 層の出力を View に伝えるためのプレゼンター
+    :param controller: コントローラ
+    :param presenter: プレゼンター。親オブジェクトは MainWindow に設定される
     :param parent: 親ウィジェット
     """
 
@@ -23,8 +24,21 @@ class MainWindow(QMainWindow):
 
         self._controller = controller
         self._presenter = presenter
+        self._presenter.setParent(self)
 
         self.setWindowTitle('MainWindow')
+
+        self._create_children()
+        self.setCentralWidget(self._parameter_widget)
+
+        self._connect_signals()
+
+    def _create_children(self) -> None:
+        """子ウィジェットを生成する."""
+        self._parameter_widget = ParameterWidget()
+
+    def _connect_signals(self) -> None:
+        """シグナルを接続する."""
         self._presenter.update_view.connect(self._update_view)
 
     def _update_view(self, view_model: ViewModel) -> None:

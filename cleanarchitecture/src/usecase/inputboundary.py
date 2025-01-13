@@ -11,10 +11,15 @@ class InputBoundary(metaclass=ABCMeta):
 
     @abstractmethod
     def input(self, data: InputData) -> None:
-        pass
+        """Controller からの入力.
+
+        :param data: 入力データ
+        """
+        ...
 
 
 @dataclass
 class InputData:
+    """Controller からの入力データ."""
 
     id: int = 0
