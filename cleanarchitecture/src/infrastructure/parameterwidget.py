@@ -22,7 +22,8 @@ class ParameterWidget(QWidget):
 
         :param view_model: ViewModel
         """
-        pass
+        self._name_edit.setText(view_model.name)
+        self._hp_spin_box.setValue(view_model.hp)
 
     def _create_children(self) -> None:
         self._name_edit = QLineEdit('', parent=self)

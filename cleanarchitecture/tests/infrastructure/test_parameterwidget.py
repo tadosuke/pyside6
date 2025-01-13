@@ -4,6 +4,7 @@ import unittest
 
 from PySide6.QtWidgets import QApplication
 
+from adapter.presenter import ViewModel
 from entity.enemyparameter import EnemyParameter
 from infrastructure.parameterwidget import ParameterWidget
 
@@ -34,6 +35,15 @@ class TestParameterWidget(unittest.TestCase):
         if _IS_SHOW:
             self.widget.show()
             self.app.exec()
+
+    def test_update_view(self):
+        """ViewModel の内容に応じて表示が更新されるか？"""
+        view_model = ViewModel(name="Goblin", hp=50)
+
+        self.widget.update_view(view_model)
+
+        self.assertEqual("Goblin", self.widget._name_edit.text())
+        self.assertEqual(50, self.widget._hp_spin_box.value())
 
 
 if __name__ == "__main__":
