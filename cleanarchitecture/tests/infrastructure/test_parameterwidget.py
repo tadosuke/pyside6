@@ -9,7 +9,7 @@ from entity.enemyparameter import EnemyParameter
 from infrastructure.parameterwidget import ParameterWidget
 
 
-_IS_SHOW = False  # 表示テストを行うか？
+_IS_SHOW = True  # 表示テストを行うか？
 
 
 class TestParameterWidget(unittest.TestCase):

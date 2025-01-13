@@ -27,14 +27,22 @@ class ParameterWidget(QWidget):
 
     def _create_children(self) -> None:
         self._name_edit = QLineEdit('', parent=self)
+        self._name_edit.textEdited.connect(self._on_name_edited)
 
         self._hp_spin_box = QSpinBox(parent=self)
         self._hp_spin_box.setValue(0)
         self._hp_spin_box.setMinimum(EnemyParameter.HP_MIN)
         self._hp_spin_box.setMaximum(EnemyParameter.HP_MAX)
+        self._hp_spin_box.valueChanged.connect(self._on_hp_changed)
 
     def _create_layout(self):
         layout = QFormLayout()
         layout.addRow('名前', self._name_edit)
         layout.addRow('HP', self._hp_spin_box)
         self.setLayout(layout)
+
+    def _on_name_edited(self, text: str) -> None:
+        pass
+
+    def _on_hp_changed(self, value: int) -> None:
+        pass
