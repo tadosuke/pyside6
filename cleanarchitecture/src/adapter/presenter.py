@@ -24,8 +24,10 @@ class Presenter(QObject):
 
     def output(self, data: OutputData) -> None:
         """(OutputBoundary)UseCase 層からの出力を受け取る."""
-        # データを加工
-        view_model = ViewModel()
+        parameter = data.parameter
+
+        # データを表示用の ViewModel に加工する
+        view_model = ViewModel(name=parameter.name, hp=parameter.hp)
 
         # View に通知
         self.update_view.emit(view_model)
@@ -34,4 +36,6 @@ class Presenter(QObject):
 @dataclass
 class ViewModel:
     """View の表示内容を保持するデータクラス."""
-    pass
+
+    name: str
+    hp: int
