@@ -14,7 +14,7 @@ class UseCaseInteractor(InputBoundary):
 
     def __init__(
             self,
-            output: OutputBoundary) -> None:
+            output: OutputBoundary = None) -> None:
         self._output = output
 
     def input(self, input_data: InputData) -> None:
@@ -22,5 +22,7 @@ class UseCaseInteractor(InputBoundary):
         # input_data を使って Entity を操作する
 
         # adapter 層に出力
+        if self._output is None:
+            return
         output_data = OutputData()
         self._output.output(output_data)
