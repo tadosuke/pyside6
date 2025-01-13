@@ -15,6 +15,8 @@ class Presenter(QObject):
 
     :param parent: 親オブジェクト
     """
+    # NOTE: OutputBoundary を継承させたいが、
+    #       metaclass を使おうとすると QObject と衝突するため、Protocol を使う
 
     #: View の更新を要求するシグナル
     update_view = Signal(object)
