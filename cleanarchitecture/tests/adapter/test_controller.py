@@ -4,6 +4,8 @@ import unittest
 from unittest import mock
 
 from adapter.controller import Controller
+from entity.enemyparameter import EnemyParameter
+from usecase.dataaccess import DataAccessInterface
 from usecase.inputboundary import InputBoundary
 from usecase.interactor import UseCaseInteractor
 
@@ -11,7 +13,8 @@ from usecase.interactor import UseCaseInteractor
 class TestController(unittest.TestCase):
 
     def setUp(self) -> None:
-        self._input_boundary = UseCaseInteractor()
+        self._data_access = _DataAccessMock()
+        self._input_boundary = UseCaseInteractor(self._data_access)
 
     def test_init(self):
         """生成時の状態が正しいか？"""
@@ -42,6 +45,15 @@ class TestController(unittest.TestCase):
         with mock.patch.object(self._input_boundary, 'save') as mp_set:
             controller.save()
             mp_set.assert_called_once()
+
+
+class _DataAccessMock(DataAccessInterface):
+
+    def save(self, parameter: EnemyParameter) -> None:
+        pass
+
+    def load(self) -> EnemyParameter:
+        pass
 
 
 if __name__ == "__main__":

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from entity.enemyparameter import EnemyParameter
+from usecase.dataaccess import DataAccessInterface
 from usecase.inputboundary import InputBoundary
 from usecase.outputboundary import OutputBoundary, OutputData
 
@@ -10,14 +11,17 @@ from usecase.outputboundary import OutputBoundary, OutputData
 class UseCaseInteractor(InputBoundary):
     """アプリケーションのルールに基づき、entity 層を操作するクラス.
 
+    :param data_access: 読込/保存用のインターフェース
     :param output: adapter 層に渡す出力
     """
 
     def __init__(
             self,
+            data_access: DataAccessInterface,
             output: OutputBoundary = None) -> None:
-        self._enemy_param = EnemyParameter()
+        self._data_access = data_access
         self._output = output
+        self._enemy_param = EnemyParameter()
 
     def set_name(self, name: str) -> None:
         """(override)名前を設定する.
@@ -36,9 +40,12 @@ class UseCaseInteractor(InputBoundary):
         self._output_parameter()
 
     def save(self) -> None:
-        """(override)保存する."""
-        # todo
-        print('Interactor.save')
+        """(override)パラメータを保存する."""
+        self._data_access.save(self._enemy_param)
+
+    def load(self) -> EnemyParameter:
+        """(override)パラメータを読み込む."""
+        return self._data_access.load()
 
     def _output_parameter(self) -> None:
         if self._output is None:
