@@ -44,10 +44,15 @@ class MainWindow(QMainWindow):
         menubar = self.menuBar()
         file_menu = menubar.addMenu("ファイル")
 
-        # 保存
-        save_action = QAction("保存", self)
+        # Save
+        save_action = QAction("Save", self)
         save_action.triggered.connect(self._save)
         file_menu.addAction(save_action)
+
+        # Load
+        load_action = QAction("Load", self)
+        load_action.triggered.connect(self._load)
+        file_menu.addAction(load_action)
 
     def _create_children(self) -> None:
         """子ウィジェットを生成する."""
@@ -65,5 +70,9 @@ class MainWindow(QMainWindow):
         self._parameter_widget.update_view(view_model)
 
     def _save(self) -> None:
-        """保存メニューが選択されたときの処理."""
+        """Save が選択されたときの処理."""
         self._controller.save()
+
+    def _load(self) -> None:
+        """Load が選択されたときの処理."""
+        self._controller.load()

@@ -19,3 +19,7 @@ class InputBoundary(metaclass=ABCMeta):
     @abstractmethod
     def save(self) -> None:
         ...
+
+    @abstractmethod
+    def load(self) -> None:
+        ...

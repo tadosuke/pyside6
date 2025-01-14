@@ -1,4 +1,5 @@
 """infrastructure.fileaccess モジュールのテスト."""
+
 import os
 import unittest
 
@@ -38,6 +39,12 @@ class TestFileAccess(unittest.TestCase):
         loaded_param = self._file_access.load()
         self.assertEqual(loaded_param.name, param.name)
         self.assertEqual(loaded_param.hp, param.hp)
+
+    def test_load_failed(self):
+        """読み込みに失敗したとき、空のパラメータを返すか？"""
+        loaded_param = self._file_access.load()
+        self.assertEqual('', loaded_param.name)
+        self.assertEqual(0, loaded_param.hp)
 
 
 if __name__ == "__main__":

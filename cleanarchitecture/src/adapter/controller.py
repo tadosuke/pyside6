@@ -26,3 +26,7 @@ class Controller:
     def save(self) -> None:
         """現在の設定を保存する."""
         self._input_boundary.save()
+
+    def load(self) -> None:
+        """現在の設定を読み込む."""
+        self._input_boundary.load()

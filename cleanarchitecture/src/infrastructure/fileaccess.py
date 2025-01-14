@@ -35,9 +35,12 @@ class FileAccess(DataAccessInterface):
 
         :return: 読み込んだパラメータ
         """
-        with open(FILE_NAME, "r", encoding="utf-8") as file:
-            data = json.load(file)
-        parameter = EnemyParameter()
-        parameter.name = data.get("name", "")
-        parameter.hp = data.get("hp", 0)
-        return parameter
+        try:
+            with open(FILE_NAME, "r", encoding="utf-8") as file:
+                data = json.load(file)
+            parameter = EnemyParameter()
+            parameter.name = data.get("name", "")
+            parameter.hp = data.get("hp", 0)
+            return parameter
+        except Exception:
+            return EnemyParameter()
