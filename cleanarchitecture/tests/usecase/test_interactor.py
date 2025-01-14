@@ -38,16 +38,24 @@ class TestUseCaseInteractor(unittest.TestCase):
         exp_data = OutputData(self._interactor._enemy_param)
         self._mock_output.output.assert_called_once_with(exp_data)
 
-    def test_save(self):
-        """保存時に DataAccessInterface の関数が呼ばれるか？"""
+    def test_save_and_load(self):
+        """保存時にパラメータを渡しているか？"""
         self._interactor.save()
 
-        self._data_access.save.assert_called_once()
+        self._data_access.save.assert_called_once_with(self._interactor._enemy_param)
 
     def test_load(self):
-        """読込時に DataAccessInterface の関数が呼ばれるか？"""
+        """読み込んだデータでパラメータが上書きされるか？"""
+        mock_param = EnemyParameter()
+        mock_param.name = 'Goblin'
+        mock_param.hp = 20
+
+        self._data_access.load.return_value = mock_param
         self._interactor.load()
 
+        param = self._interactor._enemy_param
+        self.assertEqual('Goblin', param.name)
+        self.assertEqual(20, param.hp)
         self._data_access.load.assert_called_once()
 
 

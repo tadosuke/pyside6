@@ -43,9 +43,9 @@ class UseCaseInteractor(InputBoundary):
         """(override)パラメータを保存する."""
         self._data_access.save(self._enemy_param)
 
-    def load(self) -> EnemyParameter:
+    def load(self) -> None:
         """(override)パラメータを読み込む."""
-        return self._data_access.load()
+        self._enemy_param = self._data_access.load()
 
     def _output_parameter(self) -> None:
         if self._output is None:
