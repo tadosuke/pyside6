@@ -50,7 +50,7 @@ class ParameterWidget(QWidget):
         self.setLayout(layout)
 
     def _on_name_edited(self, text: str) -> None:
-        pass
+        self._controller.set_name(text)
 
     def _on_hp_changed(self, value: int) -> None:
-        pass
+        self._controller.set_hp(value)

@@ -1,6 +1,7 @@
 """infrastructure.parameterwidget モジュールのテスト."""
 
 import unittest
+from unittest import mock
 from unittest.mock import MagicMock
 
 from PySide6.QtWidgets import QApplication
@@ -46,6 +47,20 @@ class TestParameterWidget(unittest.TestCase):
 
         self.assertEqual("Goblin", self._widget._name_edit.text())
         self.assertEqual(50, self._widget._hp_spin_box.value())
+
+    def test_edited_name_delegate(self):
+        """名前欄が編集されたとき、Controller の set_name が呼ばれるか？"""
+        name_edit = self._widget._name_edit
+        with mock.patch.object(self._controlelr, 'set_name') as mp_set:
+            name_edit.insert('Goblin')  # textEdited が発火
+            mp_set.assert_called_once_with('Goblin')
+
+    def test_edited_hp_delegate(self):
+        """HP 欄が編集されたとき、Controller の set_hp が呼ばれるか？"""
+        hp_spin = self._widget._hp_spin_box
+        with mock.patch.object(self._controlelr, 'set_hp') as mp_set:
+            hp_spin.setValue(20)
+            mp_set.assert_called_once_with(20)
 
 
 if __name__ == "__main__":
