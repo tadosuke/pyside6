@@ -1,0 +1,83 @@
+@startuml
+
+package entity {
+    class EnemyParameter {
+        + name: str
+        + hp: int
+    }
+}
+
+package usecase {
+    interface DataAccessInterface {
+        + save()
+        + load()
+    }
+    interface InputBoundary {
+        + set_name()
+        + set_hp()
+        + save()
+        + load()
+    }
+    interface OutputBoundary {
+        + output(OutputData)
+    }
+    class OutputData <<DataClass>> {
+        + parameter: EnemyParameter
+    }
+    class UseCaseInteractor {
+        + set_name()
+        + set_hp()
+        + save()
+        + load()
+    }
+}
+
+package adapter {
+    class Controller {
+        + set_name()
+        + set_hp()
+        + save()
+        + load()
+    }
+    class Presenter {
+        + output(OutputData)
+        + update_view(ViewModel)
+    }
+    class ViewModel <<DataClass>> {
+        + name: str
+        + hp: int
+    }
+}
+
+package infrastructure {
+    class FileAccess {
+        + save()
+        + load()
+    }
+    class MainWindow {
+        - update_view(ViewModel)
+    }
+    class ParameterWidget {
+        + update_view(ViewModel)
+    }
+}
+
+MainWindow *- ParameterWidget
+MainWindow o-- Controller
+MainWindow ..> ViewModel : input
+MainWindow o-- Presenter
+FileAccess --|> DataAccessInterface
+
+Presenter --|> OutputBoundary
+Presenter ..> OutputData : input
+Presenter .> ViewModel : output
+Controller o-- InputBoundary
+
+InputBoundary <|-- UseCaseInteractor
+OutputBoundary --o UseCaseInteractor
+DataAccessInterface --o UseCaseInteractor
+UseCaseInteractor .> OutputData : output
+
+UseCaseInteractor *-- EnemyParameter
+
+@enduml
