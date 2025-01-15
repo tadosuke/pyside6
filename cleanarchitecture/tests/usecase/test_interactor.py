@@ -58,6 +58,10 @@ class TestUseCaseInteractor(unittest.TestCase):
         self.assertEqual(20, param.hp)
         self._data_access.load.assert_called_once()
 
+        # output() が呼ばれるか？
+        exp_data = OutputData(self._interactor._enemy_param)
+        self._mock_output.output.assert_called_once_with(exp_data)
+
 
 if __name__ == "__main__":
     unittest.main()
