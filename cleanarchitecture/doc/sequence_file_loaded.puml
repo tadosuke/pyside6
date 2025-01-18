@@ -1,0 +1,21 @@
+@startuml
+
+actor User
+participant ParameterWidget
+participant FileAccess
+participant Controller
+participant Presenter
+participant UseCaseInteractor
+participant EnemyParameter
+
+User -> ParameterWidget : 「Load」を選択
+ParameterWidget -> Controller : load()
+Controller -> UseCaseInteractor : load()
+UseCaseInteractor -> FileAccess : load()
+return EnemyParameter
+UseCaseInteractor -> EnemyParameter : 読み込んだ\nEnemyParameter に更新
+UseCaseInteractor -> Presenter : output(OutputData)
+Presenter -> ParameterWidget : update_view()
+ParameterWidget -> User : 表示が更新される
+
+@enduml

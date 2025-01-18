@@ -1,0 +1,14 @@
+@startuml
+
+actor User
+participant ParameterWidget
+participant Controller
+participant UseCaseInteractor
+participant EnemyParameter
+
+User -> ParameterWidget : 「名前」を更新
+ParameterWidget -> Controller : set_name()
+Controller -> UseCaseInteractor : set_name()
+UseCaseInteractor -> EnemyParameter : name を変更
+
+@enduml
